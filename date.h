@@ -1,6 +1,6 @@
-/*  AUTEUR(S):
-    1) Nom + Code permanent du l'étudiant.e 1
-    2) Nom + Code permanent du l'étudiant.e 2
+/*
+    GERICOT thomas
+    Gericot + GERT10089801
 */
 
 #if !defined(__DATE_H__)
