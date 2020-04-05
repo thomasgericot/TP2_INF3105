@@ -8,17 +8,34 @@
 
 #include <iostream>
 
-class Date{
-  public:
-	Date();
-	// À compléter
+class Date
+{
+public:
+    Date();
+    Date(int a, int m, int j);
+
+    // À compléter
     bool operator <(const Date& date) const;
     int operator - (const Date& date)const;
 
-  private:
+    void regler(int a, int m, int j);
 
-  friend std::ostream& operator << (std::ostream&, const Date& date);
-  friend std::istream& operator >> (std::istream&, Date& date);
+    int getAnnee();
+    int getMois();
+    int getJour();
+
+private:
+
+    friend std::ostream& operator << (std::ostream&, const Date& date);
+    friend std::istream& operator >> (std::istream&, Date& date);
+
+
+protected:
+
+    int annee;
+    int mois;
+    int jour;
+
 };
 
 #endif

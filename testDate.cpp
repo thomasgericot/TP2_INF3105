@@ -16,7 +16,7 @@ int main()
         Date d;
         str >> d >> std::ws;
         std::cout << d << std::endl;
-        if(str) dates.push_back(d);
+        dates.push_back(d);
     }
 
     // Test du comparateur
