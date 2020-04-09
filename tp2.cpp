@@ -99,7 +99,7 @@ int tp2(istream& entree)
     Date maintenant;
     avl_tree stock(maintenant);
 
-
+    int nbPrescriptions = 0;
     while (entree)
     {
         string typecommande;
@@ -108,7 +108,8 @@ int tp2(istream& entree)
 
         if (typecommande == "PRESCRIPTION")
         {
-            std::cout << "PRESCRIPTION" << std::endl;
+            nbPrescriptions++;
+            std::cout << "PRESCRIPTION " <<nbPrescriptions<< std::endl;
             char deuxpoints = 0;
             entree >> deuxpoints;
             assert(deuxpoints == ':');
@@ -174,6 +175,7 @@ int tp2(istream& entree)
             assert(pointvirgule == ';');
             
             cout << "STOCK "<<maintenant<<std::endl;
+
             stock.afficherMedicamentsValide();
         }
         else if (typecommande == "DATE")
@@ -205,11 +207,6 @@ int tp2(istream& entree)
 // syntaxe d'appel : ./tp2 [nomfichier.txt]
 int main(int argc, const char** argv)
 {
-    int prog = 0;
-    std::ofstream out("out.txt");
-    std::streambuf* coutbuf = std::cout.rdbuf(); //save old buf
-    std::cout.rdbuf(out.rdbuf()); //redirect std::cout to out.txt!
-
     // Gestion de l'entrée :
     //  - lecture depuis un fichier si un argument est spécifié;
     //  - sinon, lecture depuis std::cin.
@@ -230,8 +227,6 @@ int main(int argc, const char** argv)
     {
         prog = tp2(std::cin);
     }
-
-    std::cout.rdbuf(coutbuf); //reset to standard output again
 
     return 0;
 }

@@ -20,7 +20,15 @@ Medicament* avl_tree::trouverMedicament(std::string NomMedicament)
 
 void avl_tree::insererMedicament(std::string nom, int quantite, Date expiration)
 {
-    m_root = inserer(m_root, nom, quantite, expiration);
+    Medicament* medicament = trouverMedicament(nom);    
+    if (medicament)
+    {
+        medicament->ajouterLot(expiration, quantite, Date());
+    }
+    else
+    {
+        m_root = inserer(m_root, nom, quantite, expiration);
+    }
 }
 
 void avl_tree::mettreAjourEtat(Date aujourdhui)
