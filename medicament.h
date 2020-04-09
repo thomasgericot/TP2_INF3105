@@ -1,3 +1,7 @@
+/*  GERICOT
+Thomas Gericot GERT10089801
+*/
+
 #if !defined(__MEDICAMENT_H__)
 #define __MEDICAMENT_H__
 

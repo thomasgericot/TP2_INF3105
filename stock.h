@@ -1,14 +1,14 @@
-/*  AUTEUR(S):
-    1) Nom + Code permanent du l'étudiant.e 1
-    2) Nom + Code permanent du l'étudiant.e 2
+/*  GERICOT
+Thomas Gericot GERT10089801
 */
+
 #if !defined(__STOCK_H__)
 #define __STOCK_H__
 
 #include <iostream>
 #include<algorithm>
 #include "medicament.h"
-#include "prescription.h"
+
 
 // noeud d'arbre de medicament
 
