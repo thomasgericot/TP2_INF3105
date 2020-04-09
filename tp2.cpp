@@ -207,6 +207,7 @@ int tp2(istream& entree)
 // syntaxe d'appel : ./tp2 [nomfichier.txt]
 int main(int argc, const char** argv)
 {
+    int prog = 0;
     // Gestion de l'entrée :
     //  - lecture depuis un fichier si un argument est spécifié;
     //  - sinon, lecture depuis std::cin.
@@ -228,7 +229,7 @@ int main(int argc, const char** argv)
         prog = tp2(std::cin);
     }
 
-    return 0;
+    return prog;
 }
 
 
