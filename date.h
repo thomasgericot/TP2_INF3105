@@ -18,6 +18,8 @@ public:
     bool operator <(const Date& date) const;
     int operator - (const Date& date)const;
 
+    Date operator + (const int& jours)const;
+
     void regler(int a, int m, int j);
 
     int getAnnee();

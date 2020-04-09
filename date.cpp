@@ -50,6 +50,22 @@ bool Date::operator <(const Date& d) const
     return ((*this)-d)<0;
 }
 
+Date Date::operator + (const int& jours)const
+{
+    tm temp;
+    temp.tm_hour = 0;
+    temp.tm_min = 0;
+    temp.tm_sec = 0;
+    temp.tm_year = this->annee - 1900;
+    temp.tm_mon = this->mois - 1;
+    temp.tm_mday = this->jour;
+    time_t tempseconde = mktime(&temp);
+    tempseconde += (uint64_t)(3600 * 24 * jours);
+    
+    tm* dt = localtime(&tempseconde);
+    return Date(1900 + dt->tm_year,1 + dt->tm_mon,dt->tm_mday);
+}
+
 int Date::operator - (const Date& date) const
 {
     //Date -> tm -> time_t
