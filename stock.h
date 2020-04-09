@@ -62,7 +62,7 @@ protected:
 
     void afficherMedicamentsValide_inorder(MedicamentNoeud* t);
 
-    void postorder(MedicamentNoeud* t);
+    //void postorder(MedicamentNoeud* t);
     
     
     MedicamentNoeud* trouverNomMedicament(MedicamentNoeud* t, std::string NomMedicament);

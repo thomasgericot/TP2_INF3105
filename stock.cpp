@@ -42,7 +42,7 @@ void avl_tree::afficherMedicamentsValide_inorder(MedicamentNoeud* t)
 
     if (t->medicaments)
     {
-        t->medicaments->afficherEtatStock(true);
+        t->medicaments->afficherEtatStock();
     }
 
     afficherMedicamentsValide_inorder(t->droite);
@@ -55,7 +55,7 @@ void avl_tree::mettreAjourEtat_inorder(MedicamentNoeud* t)
     mettreAjourEtat_inorder(t->gauche);
 
     if(t->medicaments)
-        t->medicaments->mettreEtatExpirationAJour(m_aujourdhui);
+        t->medicaments->mettreEtatMedicament(m_aujourdhui);
 
     mettreAjourEtat_inorder(t->droite);
 }
@@ -153,15 +153,6 @@ MedicamentNoeud* avl_tree::balance(MedicamentNoeud* t)
             t = rr_rotat(t);
     }
     return t;
-}
-
-void avl_tree::postorder(MedicamentNoeud* t)
-{
-    if (t == NULL)
-        return;
-    postorder(t->gauche);
-    postorder(t->droite);
-    std::cout << t->medicaments->nom() << " ";
 }
 
 MedicamentNoeud* avl_tree::trouverNomMedicament(MedicamentNoeud* t, std::string NomMedicament)

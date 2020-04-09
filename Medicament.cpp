@@ -19,10 +19,12 @@ Medicament::Medicament(std::string nom, Date expiration, int quantite, Date aujo
     m_nombreDelots++;
 }
 
-void Medicament::mettreEtatExpirationAJour(Date aujourdhui)
+void Medicament::mettreEtatMedicament(Date aujourdhui)
 {
     for (int i = 0; i < m_nombreDelots; ++i)
     {
+        m_lots[i].etat = m_lots[i].quantite != 0 ? Etat::valide : Etat::vide;
+
         m_lots[i].testExpire(aujourdhui);
     }
 }
@@ -38,64 +40,51 @@ int Medicament::trouverPremierExpire()
     return index;
 }
 
-void Medicament::afficherEtatStock(bool uniquementValide)
+void Medicament::afficherEtatStock()
 {
     for (int i = 0; i < m_nombreDelots; ++i)
     {
-        if (uniquementValide && (m_lots[i].etat == Etat::expire))
+        if (m_lots[i].etat == Etat::valide)
         {
-            continue;
+            std::cout << m_nomMedicament << " " << m_lots[i].quantite << " " << m_lots[i].expiration << std::endl;
         }
-        if (m_lots[i].quantite == 0)
-        {
-            continue;
-        }
-
-        std::cout << m_nomMedicament << " " << m_lots[i].quantite << " " << m_lots[i].expiration << std::endl;
     }
 }
 
-void Medicament::ajusterStocks(int totalDoseAEnlever, Date finTraitement)
+void Medicament::ajusterStocks(int index,int totalDoseAEnlever)
 {
-    do
+    if (index >= 0 && index < m_nombreDelots)
     {
-        int lePlusProche = -1;
-        int diff = 99999999;
-        for (int i = 0; i < m_nombreDelots; ++i)
+        m_lots[index].quantite -= totalDoseAEnlever;
+        if (m_lots[index].quantite == 0)
+            m_lots[index].etat = Etat::vide;
+        else
+            m_lots[index].etat = Etat::valide;
+    }
+}
+
+bool Medicament::trouveLotPourPrescription(int totalDoseTraitement,Date finTraitement)
+{
+    bool ok = false;
+    int indexDuPlusProche = -1;
+    Date expirationProche(2050,12,31);
+    for (int i = 0; i < m_nombreDelots; ++i)
+    {
+        if ((m_lots[i].etat == Etat::valide) && (finTraitement < m_lots[i].expiration) && (totalDoseTraitement <= m_lots[i].quantite))
         {
-            if (m_lots[i].etat == Etat::valide)
+            if ( (m_lots[i].expiration) < (expirationProche))
             {
-                int n = m_lots[i].expiration - finTraitement;
-                if (n < diff)
-                {
-                    diff = n;
-                    lePlusProche = i;
-                }
+                expirationProche = m_lots[i].expiration;
+                indexDuPlusProche = i;
             }
         }
-
-        int totalAEnleve = (int)std::min(totalDoseAEnlever, m_lots[lePlusProche].quantite);
-        m_lots[lePlusProche].quantite -= totalAEnleve;
-        if (m_lots[lePlusProche].quantite == 0)
-            m_lots[lePlusProche].etat = Etat::vide;
-        else
-            m_lots[lePlusProche].etat = Etat::valide;
-
-        totalDoseAEnlever -= totalAEnleve;
-    } while (totalDoseAEnlever);
-}
-
-int Medicament::totalDosesDisponible(Date finTraitement)
-{
-    int totalDisponible = 0;
-    for (int i = 0; i < m_nombreDelots; ++i)
-    {
-        if ((m_lots[i].etat == Etat::valide) && (finTraitement < m_lots[i].expiration))
-        {
-            totalDisponible += m_lots[i].quantite;
-        }
     }
-    return totalDisponible;
+    if (indexDuPlusProche != -1)
+    {
+        ok = true;
+        ajusterStocks(indexDuPlusProche, totalDoseTraitement);
+    }
+    return ok;
 }
 
 void Medicament::ajouterLot(Date expiration, int quantite, Date aujourdhui)
@@ -132,6 +121,12 @@ std::string Medicament::nom()
 {
     return m_nomMedicament;
 }
+
+
+
+
+
+
 
 /*int Medicament::totalDosesDisponible2(Date finTraitement, int dose, int rep)
 {
@@ -182,22 +177,25 @@ std::string Medicament::nom()
             return 0;
         }
 
-
-        
-
-
-        
-
-
         return 1;
 
     }
     else
         return dose * rep;
 
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 */
 /*}
 int leplusproche = m_lots[0].quantite;

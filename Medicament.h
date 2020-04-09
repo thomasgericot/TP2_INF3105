@@ -39,16 +39,16 @@ public:
     Medicament(std::string nom);
     Medicament(std::string nom,Date d,int quantite, Date aujourdhui=Date());
 
-    void afficherEtatStock(bool uniquementValide);        
+    void afficherEtatStock();        
     int trouverPremierExpire();
     void ajouterLot(Date expiration, int quantite, Date aujourdhui);
    
-    void ajusterStocks(int totalDoseAEnlever, Date finTraitement);
-    void ajusterStocks1(int totalDoseAEnlever, Date finTraitement);
-    int totalDosesDisponible(Date finTraitement);
+    void ajusterStocks(int index,int totalDoseAEnlever);
+    //void ajusterStocks1(int totalDoseAEnlever, Date finTraitement);
+    bool trouveLotPourPrescription(int totalDoseTraitement,Date finTraitement);
 
-    void mettreEtatExpirationAJour(Date aujourdhui);
-    int totalDosesDisponible2(Date finTraitement , int dose, int cycle);
+    void mettreEtatMedicament(Date aujourdhui);
+   // int totalDosesDisponible2(Date finTraitement , int dose, int cycle);
     std::string nom();
     
 };

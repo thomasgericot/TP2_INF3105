@@ -130,42 +130,17 @@ int tp2(istream& entree)
                 if (medicament)
                 {  
                     Date finTraitement = maintenant + totalCycle;
-                    int totalDosesDisponible = medicament->totalDosesDisponible(finTraitement);
-                    /*/int totalDosesDisponible = medicament->totalDosesDisponible2(finTraitement, dose, rep);
-                    if (totalDosesDisponible == 1)
-                    {
-                        std::cout << "OK" << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "COMMANDE" << std::endl;
-                        ajouterACommandeEnCours(commandeEnCours, nomMed, nbTotalDose, maintenant);
-                    }
-                    */
-                    if (nbTotalDose < totalDosesDisponible)
-                    {
-                        commander = false;
-                        medicament->ajusterStocks( nbTotalDose,  finTraitement);
-                        
-
-                        
-
-
-                        std::cout<< " OK" << std::endl;
-                    }
-                    
-                    
-                        
-                    
-                        
-
-                
+                    commander = medicament->trouveLotPourPrescription(nbTotalDose,finTraitement) == false;                                     
                 }                
                 
-                if(commander)
+                if(commander == true)
                 {
                     std::cout << " COMMANDE" << std::endl;
                     ajouterACommandeEnCours(commandeEnCours, nomMed, nbTotalDose, maintenant);
+                }
+                else
+                {
+                    std::cout << " OK" << std::endl;
                 }
                 entree >> nomMed;
                 
@@ -188,7 +163,8 @@ int tp2(istream& entree)
                 stock.insererMedicament(nomMed, quantite, dateexpiration);
 
                 entree >> nomMed;
-            }            
+            }
+            stock.mettreAjourEtat(maintenant);
             cout << "APPROV OK";
         }
         else if (typecommande == "STOCK")
@@ -229,6 +205,11 @@ int tp2(istream& entree)
 // syntaxe d'appel : ./tp2 [nomfichier.txt]
 int main(int argc, const char** argv)
 {
+    int prog = 0;
+    std::ofstream out("out.txt");
+    std::streambuf* coutbuf = std::cout.rdbuf(); //save old buf
+    std::cout.rdbuf(out.rdbuf()); //redirect std::cout to out.txt!
+
     // Gestion de l'entrée :
     //  - lecture depuis un fichier si un argument est spécifié;
     //  - sinon, lecture depuis std::cin.
@@ -238,12 +219,19 @@ int main(int argc, const char** argv)
         if (entree_fichier.fail())
         {
             std::cerr << "Erreur d'ouverture du fichier '" << argv[1] << "'" << std::endl;
-            return 1;
+            prog =  1;
         }
-        return tp2(entree_fichier);
+        else
+        {
+            prog = tp2(entree_fichier);
+        }
     }
     else
-        return tp2(std::cin);
+    {
+        prog = tp2(std::cin);
+    }
+
+    std::cout.rdbuf(coutbuf); //reset to standard output again
 
     return 0;
 }
