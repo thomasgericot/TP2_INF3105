@@ -1,5 +1,7 @@
 .DS_STORE
 TP2/
 *.o
-
+testdate
+exemple*
 /exemples
+tp2
