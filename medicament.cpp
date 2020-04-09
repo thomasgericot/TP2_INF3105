@@ -1,4 +1,4 @@
-#include "Medicament.h"
+#include "medicament.h"
 #include <algorithm>
 
 Medicament::Medicament(std::string nom)

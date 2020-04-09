@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include<algorithm>
-#include "Medicament.h"
+#include "medicament.h"
 #include "prescription.h"
 
 // noeud d'arbre de medicament

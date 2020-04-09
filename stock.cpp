@@ -3,10 +3,10 @@ Gericot thomas
 */
 
 
-#include<iostream>
-#include<cstdio>
-#include<sstream>
-#include<algorithm>
+#include <iostream>
+#include <cstdio>
+#include <sstream>
+#include <algorithm>
 #include "stock.h"
 
 #include "medicament.h"
